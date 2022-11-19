@@ -25,7 +25,7 @@
 - 비동기 함수의 사용
     - async, await 함수 사용 지향
     - Promise 사용은 지양
-## 📌 브랜치 전략
+## 📌 Git 전략
 > 1 Branch = 1 Issue = 1 PR
 ### Git Workflow
 - git-flow를 사용합니다.(https://techblog.woowahan.com/2553/)
