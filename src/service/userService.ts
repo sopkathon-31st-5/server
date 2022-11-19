@@ -3,7 +3,7 @@ import { UserDTO } from "../interfaces/UserDTO";
 const prisma = new PrismaClient();
 
 const createUser =async(name:string, number:string) => {
-    const user= await prisma.user.findUnique({
+    const user= await prisma.user.findFirst({
         where:{
             phoneNumber:number
         }
