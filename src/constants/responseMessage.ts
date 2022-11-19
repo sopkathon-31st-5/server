@@ -31,6 +31,10 @@ export default {
     CREATE_CARD_SUCCESS: "카드 생성 성공", 
     CREATE_CARD_FAIL: "카드 생성 실패",
 
+    // 카드 수정
+    UPDATE_CARD_SUCCESS: "카드 수정 성공", 
+    UPDATE_CARD_FAIL: "카드 수정 실패",
+
     // 서버 내 오류
     INTERNAL_SERVER_ERROR: "서버 내 오류",
     INVALID_PASSWORD: "잘못된 비밀번호입니다.",
