@@ -115,6 +115,13 @@ const updateCard = async (userId: number, createCardDTO: CreateCardDTO) => {
 
 //* 명함 조회
 const getCard = async (userId: number) => {
+    const userName = await prisma.user.findFirst({
+        where: { id: userId },
+        select: {
+            name: true
+        }
+    })
+    
     const card = await prisma.card.findFirst({
         where: { userId: userId },
         select: {
@@ -142,7 +149,7 @@ const getCard = async (userId: number) => {
         }
     })
 
-    const data = { card, weekday };
+    const data = { userName, card, weekday };
     return data;
 }
 
