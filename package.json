@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-  "private": true,
+  "private": "true",
   "repository": "https://github.com/sopkathon-31st-5/server.git",
   "license": "MIT",
   "dependencies": {
