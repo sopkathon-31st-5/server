@@ -7,6 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model testTable {
-  id Int @id @default(autoincrement())
+model Card {
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(100)
+  telNumber String  @db.VarChar(20)
+  introduce String  @db.VarChar(100)
+  isDeliver Boolean
+  imageURL  String? @db.VarChar(300)
+  userId    Int
+  User      User    @relation(fields: [userId], references: [id], onDelete: Cascade, map: "userId")
+}
+
+model User {
+  id          Int    @id @default(autoincrement())
+  name        String @db.VarChar(10)
+  phoneNumber String @db.VarChar(20)
+  Card        Card[]
 }
