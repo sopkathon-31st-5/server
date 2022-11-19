@@ -2,19 +2,19 @@ import { PrismaClient } from "@prisma/client";
 import { UserDTO } from "../interfaces/UserDTO";
 const prisma = new PrismaClient();
 
-const createUser =async(name:String, number:String) => {
-    const user= await prisma.User.findUnique({
+const createUser =async(name:string, number:string) => {
+    const user= await prisma.user.findUnique({
         where:{
             phoneNumber:number
         }
     });
 
     if(user){
-        const oldUser:UserDTO={"id":user.id, "name":user.name, "phoneNumber":user.phoneNumber,"isNew":false};
+        const oldUser:UserDTO={id:user.id, name:user.name, phoneNumber:user.phoneNumber,isNew:false};
         return oldUser;
     }
 
-    const newUser=await prisma.User.create({
+    const newUser=await prisma.user.create({
         data: {
             name:name,
             phoneNumber:number
