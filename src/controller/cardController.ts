@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { emit } from "process";
 import { rm, sc } from "../constants";
 import { fail, success } from "../constants/response";
 import { CreateCardDTO } from "../interfaces/createCardDTO";
@@ -25,8 +24,23 @@ const createCard = async (req: Request, res: Response) => {
     return res.status(sc.OK).send(success(sc.OK, rm.CREATE_CARD_SUCCESS, { cardId: data }));
 };
 
+//* 명함 조회
+const getCard = async (req: Request, res: Response) => {
+    const { userId } = req.params;
+    const data = await cardService.getCard(+userId);
+
+    if (!data.card) {
+        return res.status(400).json({ status: 404, message: rm.NO_USER });
+    }
+
+    return res
+        .status(200)
+        .json({ status: 200, message: "명함 조회 성공", data });
+};
+
 const cardController = {
     createCard,
-}
+    getCard
+};
 
 export default cardController;

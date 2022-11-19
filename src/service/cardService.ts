@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import { CreateCardDTO } from "../interfaces/createCardDTO";
+import { CreateCardDTO } from "../interfaces/CreateCardDTO";
 const prisma = new PrismaClient();
 
 //* 카드 생성
 const createCard = async (userId: number, createCardDTO: CreateCardDTO) => {
-    if(!userId) return null;
+    if (!userId) return null;
     console.log("userId", userId);
 
     const data = await prisma.card.create({
@@ -20,11 +20,10 @@ const createCard = async (userId: number, createCardDTO: CreateCardDTO) => {
         },
     });
 
-    if(!data) return null;
+    if (!data) return null;
 
     const weekdays = createCardDTO?.weekday
-    //*weekdays 개수가 잘못됐는지 확인필요
-    if(weekdays.length < 7 && weekdays.length > 0)
+    if (weekdays.length < 7 && weekdays.length > 0)
         return null;
 
     const weekday = await prisma.weekday.create({
@@ -40,13 +39,47 @@ const createCard = async (userId: number, createCardDTO: CreateCardDTO) => {
         }
     });
 
-    if(!weekday) return null;
+    if (!weekday) return null;
 
     return data.id;
 };
 
+//* 명함 조회
+const getCard = async (userId: number) => {
+    const card = await prisma.card.findFirst({
+        where: { userId: userId },
+        select: {
+            id: true,
+            name: true,
+            telNumber: true,
+            introduce: true,
+            isDeliver: true,
+            imageURL: true,
+            type: true,
+            address: true,
+        }
+    })
+
+    const weekday = await prisma.weekday.findFirst({
+        where: { cardId: card?.id },
+        select: {
+            sun: true,
+            mon: true,
+            tue: true,
+            wed: true,
+            thu: true,
+            fri: true,
+            sat: true,
+        }
+    })
+
+    const data = { card, weekday };
+    return data;
+}
+
 const cardService = {
     createCard,
-}
+    getCard
+};
 
 export default cardService;
