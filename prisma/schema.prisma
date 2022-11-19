@@ -15,6 +15,7 @@ model Card {
   isDeliver Boolean
   imageURL  String? @db.VarChar(300)
   userId    Int
+  type      Int
   User      User    @relation(fields: [userId], references: [id], onDelete: Cascade, map: "userId")
 }
 
