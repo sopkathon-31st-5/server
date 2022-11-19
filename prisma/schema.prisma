@@ -8,20 +8,35 @@ datasource db {
 }
 
 model Card {
-  id        Int     @id @default(autoincrement())
-  name      String  @db.VarChar(100)
-  telNumber String  @db.VarChar(20)
-  introduce String  @db.VarChar(100)
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(100)
+  telNumber String    @db.VarChar(20)
+  introduce String    @db.VarChar(100)
   isDeliver Boolean
-  imageURL  String? @db.VarChar(300)
+  imageURL  String?   @db.VarChar(300)
   userId    Int
   type      Int
-  User      User    @relation(fields: [userId], references: [id], onDelete: Cascade, map: "userId")
+  address   String    @db.VarChar(200)
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade, map: "userId")
+  Weekday   Weekday[]
 }
 
 model User {
   id          Int    @id @default(autoincrement())
   name        String @db.VarChar(10)
-  phoneNumber String @db.VarChar(20)
+  phoneNumber String @unique @db.VarChar(20)
   Card        Card[]
+}
+
+model Weekday {
+  id     Int     @id @default(autoincrement())
+  sun    Boolean @default(false)
+  mon    Boolean @default(false)
+  tue    Boolean @default(false)
+  wed    Boolean @default(false)
+  thu    Boolean @default(false)
+  fri    Boolean @default(false)
+  sat    Boolean @default(false)
+  cardId Int
+  Card   Card    @relation(fields: [cardId], references: [id], onDelete: Cascade, map: "weekday_card_id_fk")
 }
