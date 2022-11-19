@@ -20,7 +20,7 @@ const createUser =async(name:String, number:String) => {
             phoneNumber:number
         }
     });
-    const returnUser:UserDTO={"id":newUser.id, "name":newUser.name, "phoneNumber":newUser.phoneNumber,"isNew":true};
+    const returnUser:UserDTO={id:newUser.id, name:newUser.name, phoneNumber:newUser.phoneNumber,isNew:true};
     return returnUser;
 };
 
