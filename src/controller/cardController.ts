@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { rm, sc } from "../constants";
 import { fail, success } from "../constants/response";
-import { CreateCardDTO } from "../interfaces/createCardDTO";
+import { CreateCardDTO } from "../interfaces/CreateCardDTO";
 import { cardService } from "../service";
 
 //* 카드 생성
