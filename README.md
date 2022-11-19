@@ -9,6 +9,86 @@
 
 <img width="574" alt="스크린샷 2022-11-20 오전 2 20 34" src="https://user-images.githubusercontent.com/43312096/202863439-7d2209d3-2bb3-4229-bb89-f1b683a50990.png">
 
+## 📌 schema.prisma
+```
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Card {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(100)
+  telNumber String    @db.VarChar(20)
+  introduce String    @db.VarChar(100)
+  isDeliver Boolean
+  imageURL  String?   @db.VarChar(300)
+  userId    Int
+  type      Int
+  address   String    @db.VarChar(200)
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade, map: "userId")
+  Weekday   Weekday[]
+}
+
+model User {
+  id          Int    @id @default(autoincrement())
+  name        String @db.VarChar(10)
+  phoneNumber String @unique @db.VarChar(20)
+  Card        Card[]
+}
+
+model Weekday {
+  id     Int     @id @default(autoincrement())
+  sun    Boolean @default(false)
+  mon    Boolean @default(false)
+  tue    Boolean @default(false)
+  wed    Boolean @default(false)
+  thu    Boolean @default(false)
+  fri    Boolean @default(false)
+  sat    Boolean @default(false)
+  cardId Int
+  Card   Card    @relation(fields: [cardId], references: [id], onDelete: Cascade, map: "weekday_card_id_fk")
+}
+```
+
+## 📌 package.json
+```
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": "true",
+  "repository": "https://github.com/sopkathon-31st-5/server.git",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^4.6.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "prisma": "^4.6.1"
+  },
+  "scripts": {
+    "dev": "nodemon",
+    "build": "tsc && node dist",
+    "db:pull": "npx prisma db pull",
+    "db:push": "npx prisma db push",
+    "generate": "npx prisma generate"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.11.9",
+    "nodemon": "^2.0.20"
+  }
+}
+```
+
+## 📌 서버 아키텍처
+![ar](https://user-images.githubusercontent.com/70002218/202870765-cd561f05-8a85-4498-9691-18665d99b654.jpg)
+
 ## 📌 역할 분담
 - 정정빈 : 명함 조회 api 개발, Repository 세팅, AWS 세팅
 - 강수현 : 명함 생성 / 수정 api 개발, 아키텍처 이미지 제작
