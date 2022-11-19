@@ -20,3 +20,9 @@ const createUser =async(name:String, number:String) => {
     });
     return newUser;
 };
+
+const userService= {
+    createUser
+};
+
+export default userService;
